@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;net4.6.1</TargetFrameworks>
+    <Version>1.0.0</Version>
+    <Authors>jsonlee</Authors>
+    <Description>SinGooCMS.Plugins是一个第三方组件集合！支持netstandard2.1和net framework 4.6.1。</Description>
+    <Copyright>jsonlee</Copyright>
+    <PackageProjectUrl>https://github.com/SinGooCMS/SinGooCMSPlugins</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SinGooCMS/SinGooCMSPlugins</RepositoryUrl>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
+    <DocumentationFile>bin\Release\SinGooCMS.Plugins.xml</DocumentationFile>
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>bin\Debug\SinGooCMS.Plugins.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net4.6.1'">
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="MailKit" Version="2.10.1" />
+    <PackageReference Include="aliyun-net-sdk-core" Version="1.5.10" />
+    <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.12.0" />
+    <PackageReference Include="TencentCloudSDK" Version="3.0.212" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="MailKit" Version="2.10.1" />
+    <PackageReference Include="aliyun-net-sdk-core" Version="1.5.10" />
+    <PackageReference Include="Aliyun.OSS.SDK.NetCore" Version="2.12.0" />
+    <PackageReference Include="TencentCloudSDK" Version="3.0.212" />
+  </ItemGroup>
+
+</Project>
