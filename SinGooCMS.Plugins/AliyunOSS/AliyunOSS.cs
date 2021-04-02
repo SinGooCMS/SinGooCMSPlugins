@@ -35,10 +35,11 @@ namespace SinGooCMS.Plugins.OSS
             {
                 if (!string.IsNullOrEmpty(Config.CName))
                 {
-                    var conf = new ClientConfiguration();
-                    conf.IsCname = true;
                     //使用自定义的域名
-                    client = new OssClient(Config.CName, Config.AccessKeyId, Config.AccessKeySecret, conf);
+                    client = new OssClient(Config.CName, Config.AccessKeyId, Config.AccessKeySecret, new ClientConfiguration
+                    {
+                        IsCname = true
+                    });
                 }
                 else
                     client = new OssClient(Config.EndPoint, Config.AccessKeyId, Config.AccessKeySecret); //使用默认的域名

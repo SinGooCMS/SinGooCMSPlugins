@@ -39,11 +39,11 @@ namespace SinGooCMS.Plugins.OSS
         /// <summary>
         /// 从文件中加载配置
         /// </summary>
+        /// <param name="configPath">阿里云oss配置，默认路径/config/aliyunoss.config</param>
         /// <returns></returns>
-        [Obsolete("建议存储到数据库中并缓存,而非保存在配置中")]
-        public static AliyunOSSConfig Load()
+        public static AliyunOSSConfig Load(string configPath = "/config/aliyunoss.config")
         {
-            string xmlString = File.ReadAllText(Utils.GetMapPath("/Config/aliyunoss.config"));
+            string xmlString = File.ReadAllText(Utils.GetMapPath(configPath));
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xmlString);
 
@@ -60,12 +60,13 @@ namespace SinGooCMS.Plugins.OSS
         /// <summary>
         /// 保存配置
         /// </summary>
-        [Obsolete("建议存储到数据库中并缓存,而非保存在配置中")]
-        public static void Save(AliyunOSSConfig ossConfig)
+        /// <param name="ossConfig">配置信息</param>
+        /// <param name="configPath">阿里云oss配置，默认路径/config/aliyunoss.config</param>
+        public static void Save(AliyunOSSConfig ossConfig, string configPath = "/config/aliyunoss.config")
         {
             string str = string.Format("<AliYunOSS><EndPoint>{0}</EndPoint><AccessKeyId>{1}</AccessKeyId><AccessKeySecret>{2}</AccessKeySecret><BucketName>{3}</BucketName><CName>{4}</CName></AliYunOSS>",
                 ossConfig.EndPoint, ossConfig.AccessKeyId, ossConfig.AccessKeySecret, ossConfig.BucketName, ossConfig.CName);
-            File.WriteAllText(Utils.GetMapPath("/Config/aliyunoss.config"), str);
+            File.WriteAllText(Utils.GetMapPath(configPath), str);
         }
 
         #endregion

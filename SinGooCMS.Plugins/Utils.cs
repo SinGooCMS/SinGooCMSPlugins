@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Runtime.InteropServices;
 
 #if NETSTANDARD2_1
 using Microsoft.Extensions.Configuration;
@@ -29,29 +30,30 @@ namespace SinGooCMS.Plugins
         /// <summary>
         /// 读取绝对路径
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">虚拟路径 如 /config/log4net.config</param>
         /// <returns></returns>
         public static string GetMapPath(string path = "/")
         {
-#if NET461
+#if NETSTANDARD2_1
+            if (path.StartsWith(@"/"))
+                path = path.TrimStart('/');
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path).Replace(@"\", "/"); //linux 要求所有路径都是 /
+            else
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path).Replace("/", @"\"); //windows 路径是 \
+#else
             if (System.Web.HttpContext.Current != null)
                 return System.Web.HttpContext.Current.Server.MapPath(path);
             else
             {
-                path = path.Replace("~/", "/").Replace("\\", "/");
+                path = path.Replace("~/", "/");
                 if (path.StartsWith("/"))
                     path = path.TrimStart('/');
 
-                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
+                return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path).Replace("/", @"\");
             }
 #endif
-#if NETSTANDARD2_1
-            path = path.Replace("~/", "/").Replace("\\", "/");
-            if (path.StartsWith("/"))
-                path = path.TrimStart('/');
-
-            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, path);
-#endif           
         }
 
         #endregion
